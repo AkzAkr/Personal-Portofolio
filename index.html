@@ -692,6 +692,66 @@
         .counter {
           opacity: 1;
         }
+        @keyframes glitch-photo {
+  0%, 90%, 100% {
+    clip-path: none;
+    transform: translate(0);
+  }
+  92% {
+    clip-path: polygon(0 15%, 100% 15%, 100% 35%, 0 35%);
+    transform: translate(-4px, 0);
+  }
+  94% {
+    clip-path: polygon(0 55%, 100% 55%, 100% 75%, 0 75%);
+    transform: translate(4px, 0);
+  }
+  96% {
+    clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+    transform: translate(-2px, 0);
+  }
+  98% {
+    clip-path: none;
+    transform: translate(0);
+  }
+}
+
+.photo-glitch-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.photo-glitch-wrapper img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo-glitch-wrapper .glitch-r,
+.photo-glitch-wrapper .glitch-b {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s;
+}
+.photo-glitch-wrapper:hover .glitch-r {
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  filter: grayscale(0) sepia(1) saturate(6) hue-rotate(-20deg);
+  animation: glitch-photo 2s infinite;
+}
+.photo-glitch-wrapper:hover .glitch-b {
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  filter: grayscale(0) sepia(1) saturate(6) hue-rotate(200deg);
+  animation: glitch-photo 2s infinite reverse;
+  animation-delay: 0.05s;
+}
+.photo-glitch-wrapper:hover img {
+  filter: grayscale(0) contrast-100;
+}
       </style>
     </noscript>
     <base target="_blank" />
@@ -1314,15 +1374,13 @@
               </div>
             </div>
 
-            <div
-              class="bg-surface-container-high h-[320px] overflow-hidden relative group"
-            >
-              <img
-  class="w-full h-full object-cover grayscale contrast-125 opacity-90 group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-  alt="Portrait of Anang Ismail"
-  src="asset/profile.jpeg"
-  loading="lazy"
-/>
+            <div class="bg-surface-container-high h-[320px] overflow-hidden relative group">
+  <img
+    class="w-full h-full object-cover grayscale contrast-125 opacity-90 group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+    alt="Portrait of Anang Ismail"
+    src="asset/profile.jpeg"
+    loading="lazy"
+  />
               <div
                 class="absolute inset-0 bg-primary/10 mix-blend-overlay"
               ></div>
