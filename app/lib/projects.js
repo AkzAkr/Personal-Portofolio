@@ -53,7 +53,7 @@ export const projects = [
     category: "frontend",
     className: "Narrative Web",
     status: "DEPLOYED",
-    image: "public/asset/TheFlowers.png",
+    image: "/asset/TheFlowers.png",
     description:
       "Interactive slice-of-life storytelling web experience with character design, relationship mapping, and immersive frontend UI.",
     tech: ["HTML5", "CSS3", "Vanilla JS"],
@@ -73,7 +73,7 @@ export const projects = [
   className: "Flower Identification Web App",
   status: "DEPLOYED",
   image:
-      "public/asset/floraid.png",
+      "/asset/floraid.png",
   description:
     "AI-powered flower identification web app for classifying Oxford 102 flower species from uploaded images, featuring confidence scores, top prediction alternatives, GradCAM visualization, species gallery, favorites, recent predictions, and bilingual UI.",
   tech: [
