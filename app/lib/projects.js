@@ -53,6 +53,7 @@ export const projects = [
     category: "frontend",
     className: "Narrative Web",
     status: "DEPLOYED",
+    image: "public/asset/TheFlowers.png",
     description:
       "Interactive slice-of-life storytelling web experience with character design, relationship mapping, and immersive frontend UI.",
     tech: ["HTML5", "CSS3", "Vanilla JS"],
