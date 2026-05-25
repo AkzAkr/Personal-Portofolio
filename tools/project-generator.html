@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio Project Generator</title>
+    <style>
+      :root {
+        --bg: #0a0a0f;
+        --panel: #111118;
+        --panel-2: #16161f;
+        --text: #e5e2e1;
+        --muted: #a9acb8;
+        --line: #34384a;
+        --primary: #00e5ff;
+        --green: #00ff41;
+        --yellow: #ffe600;
+        --red: #ff2d55;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(0deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+          var(--bg);
+        background-size: 28px 28px;
+        color: var(--text);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      .shell {
+        width: min(1440px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0;
+      }
+
+      .topbar,
+      .panel,
+      .output,
+      .guide {
+        border: 1px solid var(--line);
+        background: rgba(17, 17, 24, 0.92);
+        box-shadow: 8px 8px 0 rgba(0, 229, 255, 0.08);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 24px;
+        margin-bottom: 24px;
+      }
+
+      .eyebrow,
+      button,
+      label,
+      .hint,
+      .badge,
+      code,
+      pre {
+        font-family:
+          "Courier New",
+          ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          monospace;
+      }
+
+      .eyebrow {
+        color: var(--primary);
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        font-weight: 800;
+      }
+
+      h1 {
+        margin: 10px 0 0;
+        font-size: clamp(32px, 5vw, 64px);
+        line-height: 0.95;
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+        gap: 24px;
+      }
+
+      .panel,
+      .output,
+      .guide {
+        padding: 22px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        color: var(--primary);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--panel-2);
+        color: var(--text);
+        padding: 12px;
+        font: inherit;
+        outline: none;
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.12);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      button {
+        cursor: pointer;
+        border: 1px solid var(--primary);
+        background: var(--primary);
+        color: #001a20;
+        padding: 12px 16px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      button.secondary {
+        background: transparent;
+        color: var(--primary);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(0, 229, 255, 0.35);
+        color: var(--primary);
+        padding: 8px 10px;
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .hint {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      pre {
+        min-height: 520px;
+        margin: 0;
+        overflow: auto;
+        background: #050508;
+        color: var(--green);
+        border: 1px solid var(--line);
+        padding: 18px;
+        line-height: 1.6;
+        white-space: pre;
+      }
+
+      .guide {
+        margin-top: 24px;
+      }
+
+      .guide-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .guide-card {
+        background: var(--panel-2);
+        border: 1px solid var(--line);
+        padding: 16px;
+      }
+
+      .guide-card strong {
+        color: var(--text);
+      }
+
+      @media (max-width: 980px) {
+        .topbar,
+        .grid,
+        .guide-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar">
+        <div>
+          <div class="eyebrow">LOCAL_TOOL // PORTFOLIO_DATA_GENERATOR</div>
+          <h1>Project Generator</h1>
+          <p>
+            This file is intentionally outside the Next app. Open it with VSCode
+            Go Live, fill the form, copy the generated object, then paste it into
+            the data file shown in the guide.
+          </p>
+        </div>
+        <div>
+          <span class="badge">NOT_PUBLIC_ROUTE</span>
+        </div>
+      </section>
+
+      <section class="grid">
+        <form class="panel" id="project-form">
+          <div class="form-grid">
+            <div class="field full">
+              <label for="type">Project Type</label>
+              <select id="type">
+                <option value="general">General Portfolio Project</option>
+                <option value="roblox">Roblox Game Chamber</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="title">Title</label>
+              <input id="title" placeholder="Example: Smart Garden Dashboard" />
+            </div>
+
+            <div class="field">
+              <label for="id">ID / Slug</label>
+              <input id="id" placeholder="auto-generated-if-empty" />
+            </div>
+
+            <div class="field general-only">
+              <label for="specimen">Specimen Code</label>
+              <input id="specimen" placeholder="SPEC_007" />
+            </div>
+
+            <div class="field roblox-only" hidden>
+              <label for="code">Game Code</label>
+              <input id="code" placeholder="GAME_004" />
+            </div>
+
+            <div class="field general-only">
+              <label for="category">Category</label>
+              <select id="category">
+                <option value="frontend">frontend</option>
+                <option value="fullstack">fullstack</option>
+                <option value="ml">ml</option>
+                <option value="iot">iot</option>
+                <option value="game">game</option>
+              </select>
+            </div>
+
+            <div class="field roblox-only" hidden>
+              <label for="genre">Genre</label>
+              <input id="genre" placeholder="Simulator / Tycoon / RPG / Prototype" />
+            </div>
+
+            <div class="field general-only">
+              <label for="className">Class Name</label>
+              <input id="className" placeholder="Frontend Dashboard" />
+            </div>
+
+            <div class="field roblox-only" hidden>
+              <label for="role">Role</label>
+              <input id="role" placeholder="Gameplay Systems / UI / DataStore" />
+            </div>
+
+            <div class="field">
+              <label for="status">Status</label>
+              <input id="status" placeholder="DEPLOYED / TRAINING / BETA / PUBLISHED" />
+            </div>
+
+            <div class="field">
+              <label for="image">Image URL</label>
+              <input id="image" placeholder="https://... or /asset/example.png" />
+            </div>
+
+            <div class="field full">
+              <label for="description">Description</label>
+              <textarea id="description" placeholder="Short project description..."></textarea>
+            </div>
+
+            <div class="field">
+              <label for="tech">Tech Stack</label>
+              <input id="tech" placeholder="React, Next.js, Tailwind" />
+              <span class="hint">Separate with commas.</span>
+            </div>
+
+            <div class="field general-only">
+              <label for="featured">Featured On Homepage</label>
+              <select id="featured">
+                <option value="true">true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+
+            <div class="field general-only">
+              <label for="demoUrl">Demo URL</label>
+              <input id="demoUrl" placeholder="https://..." />
+            </div>
+
+            <div class="field general-only">
+              <label for="repoUrl">Repo URL</label>
+              <input id="repoUrl" placeholder="https://github.com/..." />
+            </div>
+
+            <div class="field roblox-only" hidden>
+              <label for="url">Roblox URL</label>
+              <input id="url" placeholder="https://www.roblox.com/games/..." />
+            </div>
+
+            <div class="field">
+              <label for="metric1Label">Metric 1</label>
+              <input id="metric1Label" placeholder="Systems" />
+            </div>
+            <div class="field">
+              <label for="metric1Value">Metric 1 Value</label>
+              <input id="metric1Value" type="number" min="0" max="100" placeholder="88" />
+            </div>
+
+            <div class="field">
+              <label for="metric2Label">Metric 2</label>
+              <input id="metric2Label" placeholder="UI Flow" />
+            </div>
+            <div class="field">
+              <label for="metric2Value">Metric 2 Value</label>
+              <input id="metric2Value" type="number" min="0" max="100" placeholder="82" />
+            </div>
+
+            <div class="field">
+              <label for="metric3Label">Metric 3</label>
+              <input id="metric3Label" placeholder="Gameplay" />
+            </div>
+            <div class="field">
+              <label for="metric3Value">Metric 3 Value</label>
+              <input id="metric3Value" type="number" min="0" max="100" placeholder="78" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit">Generate Object</button>
+            <button class="secondary" type="button" id="fill-sample">Fill Sample</button>
+            <button class="secondary" type="reset">Clear</button>
+          </div>
+        </form>
+
+        <section class="output">
+          <div class="actions" style="margin-top: 0; margin-bottom: 14px">
+            <span class="badge" id="target-file">TARGET: app/lib/projects.js</span>
+            <button class="secondary" type="button" id="copy-output">Copy</button>
+          </div>
+          <pre id="output">// Fill the form, then click Generate Object.</pre>
+        </section>
+      </section>
+
+      <section class="guide">
+        <div class="eyebrow">PASTE_GUIDE</div>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <strong>General Project</strong>
+            <p>
+              Paste the generated object into
+              <code>app/lib/projects.js</code>, inside the
+              <code>projects</code> array. Use <code>featured: true</code> if it
+              should appear in the homepage Specimen Select.
+            </p>
+          </div>
+          <div class="guide-card">
+            <strong>Roblox Game</strong>
+            <p>
+              Paste the generated object into
+              <code>app/lib/robloxGames.js</code>, inside the
+              <code>robloxGames</code> array. It will appear in Game Chamber's
+              cartridge selector.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const form = document.getElementById("project-form");
+      const typeInput = document.getElementById("type");
+      const output = document.getElementById("output");
+      const targetFile = document.getElementById("target-file");
+
+      function slugify(value) {
+        return value
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "");
+      }
+
+      function value(id) {
+        return document.getElementById(id).value.trim();
+      }
+
+      function list(id) {
+        return value(id)
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean);
+      }
+
+      function metrics(kind) {
+        const key = kind === "roblox" ? "stats" : "metrics";
+        const tones = ["cyan", "green", "yellow"];
+        const rows = [1, 2, 3]
+          .map((index) => {
+            const label = value(`metric${index}Label`);
+            const rawValue = value(`metric${index}Value`);
+            if (!label || !rawValue) return null;
+            return {
+              label,
+              value: Math.max(0, Math.min(100, Number(rawValue))),
+              tone: tones[index - 1],
+            };
+          })
+          .filter(Boolean);
+
+        return { key, rows };
+      }
+
+      function cleanObject(object) {
+        return Object.fromEntries(
+          Object.entries(object).filter(([, item]) => {
+            if (Array.isArray(item)) return item.length > 0;
+            return item !== "" && item !== undefined && item !== null;
+          }),
+        );
+      }
+
+      function toJs(value, indent = 2) {
+        const pad = " ".repeat(indent);
+        const nextPad = " ".repeat(indent + 2);
+
+        if (Array.isArray(value)) {
+          if (!value.length) return "[]";
+          if (value.every((item) => typeof item === "string")) {
+            return `[${value.map((item) => JSON.stringify(item)).join(", ")}]`;
+          }
+          return `[\n${value.map((item) => `${nextPad}${toJs(item, indent + 2)}`).join(",\n")},\n${pad}]`;
+        }
+
+        if (value && typeof value === "object") {
+          const entries = Object.entries(value);
+          return `{\n${entries
+            .map(([key, item]) => `${nextPad}${key}: ${toJs(item, indent + 2)}`)
+            .join(",\n")},\n${pad}}`;
+        }
+
+        return JSON.stringify(value);
+      }
+
+      function buildObject() {
+        const kind = typeInput.value;
+        const title = value("title");
+        const id = value("id") || slugify(title || "new-project");
+        const metricData = metrics(kind);
+
+        if (kind === "roblox") {
+          return cleanObject({
+            id,
+            code: value("code") || "GAME_004",
+            title,
+            genre: value("genre"),
+            status: value("status") || "PLANNING",
+            role: value("role"),
+            image: value("image"),
+            description: value("description"),
+            tech: list("tech"),
+            [metricData.key]: metricData.rows,
+            url: value("url"),
+          });
+        }
+
+        return cleanObject({
+          id,
+          specimen: value("specimen") || "SPEC_007",
+          title,
+          category: value("category"),
+          className: value("className"),
+          status: value("status") || "DEPLOYED",
+          image: value("image"),
+          description: value("description"),
+          tech: list("tech"),
+          [metricData.key]: metricData.rows,
+          demoUrl: value("demoUrl"),
+          repoUrl: value("repoUrl"),
+          featured: value("featured") === "true",
+        });
+      }
+
+      function updateMode() {
+        const kind = typeInput.value;
+        document.querySelectorAll(".general-only").forEach((node) => {
+          node.hidden = kind !== "general";
+        });
+        document.querySelectorAll(".roblox-only").forEach((node) => {
+          node.hidden = kind !== "roblox";
+        });
+        targetFile.textContent =
+          kind === "roblox"
+            ? "TARGET: app/lib/robloxGames.js"
+            : "TARGET: app/lib/projects.js";
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        output.textContent = `${toJs(buildObject(), 0)},`;
+      });
+
+      typeInput.addEventListener("change", updateMode);
+
+      document.getElementById("copy-output").addEventListener("click", async () => {
+        await navigator.clipboard.writeText(output.textContent);
+      });
+
+      document.getElementById("fill-sample").addEventListener("click", () => {
+        const kind = typeInput.value;
+        document.getElementById("title").value =
+          kind === "roblox" ? "Crystal Dungeon" : "AI Crop Classifier";
+        document.getElementById("id").value =
+          kind === "roblox" ? "crystal-dungeon" : "ai-crop-classifier";
+        document.getElementById("status").value = kind === "roblox" ? "BETA" : "TRAINING";
+        document.getElementById("image").value = "";
+        document.getElementById("description").value =
+          kind === "roblox"
+            ? "Roblox dungeon prototype focused on progression, combat loops, and persistent player inventory."
+            : "Machine learning experiment for classifying crop health using cleaned datasets and model evaluation metrics.";
+        document.getElementById("tech").value =
+          kind === "roblox"
+            ? "Luau, DataStore, ModuleScript, UI System"
+            : "Python, Scikit-learn, Pandas, Matplotlib";
+        document.getElementById("metric1Label").value = kind === "roblox" ? "Systems" : "Accuracy";
+        document.getElementById("metric1Value").value = kind === "roblox" ? "82" : "91";
+        document.getElementById("metric2Label").value = kind === "roblox" ? "Gameplay" : "Dataset";
+        document.getElementById("metric2Value").value = kind === "roblox" ? "78" : "86";
+        document.getElementById("metric3Label").value = kind === "roblox" ? "UI Flow" : "Validation";
+        document.getElementById("metric3Value").value = kind === "roblox" ? "74" : "80";
+
+        if (kind === "roblox") {
+          document.getElementById("code").value = "GAME_004";
+          document.getElementById("genre").value = "Dungeon Prototype";
+          document.getElementById("role").value = "Gameplay Systems / DataStore / UI";
+          document.getElementById("url").value = "";
+        } else {
+          document.getElementById("specimen").value = "SPEC_007";
+          document.getElementById("category").value = "ml";
+          document.getElementById("className").value = "Machine Learning Model";
+          document.getElementById("featured").value = "false";
+          document.getElementById("demoUrl").value = "";
+          document.getElementById("repoUrl").value = "";
+        }
+      });
+
+      updateMode();
+    </script>
+  </body>
+</html>
