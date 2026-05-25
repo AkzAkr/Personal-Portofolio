@@ -65,20 +65,31 @@ export const projects = [
     featured: true,
   },
   {
-    id: "ml-experiment",
-    specimen: "SPEC_004",
-    title: "Machine Learning Experiment",
-    category: "ml",
-    className: "Prediction Model",
-    status: "TRAINING",
-    description:
-      "Machine learning project template for preprocessing datasets, training prediction models, and evaluating model performance with clear metrics.",
-    tech: ["Python", "Scikit-learn", "Pandas", "ML"],
-    metrics: [
-      { label: "Accuracy", value: 92, tone: "cyan" },
-      { label: "Dataset", value: 86, tone: "green" },
-      { label: "Iterations", value: 74, tone: "yellow" },
-    ],
-    featured: true,
-  },
+  id: "floraid",
+  specimen: "SPEC_004",
+  title: "FloraID",
+  category: "ai",
+  className: "Flower Identification Web App",
+  status: "DEPLOYED",
+  description:
+    "AI-powered flower identification web app for classifying Oxford 102 flower species from uploaded images, featuring confidence scores, top prediction alternatives, GradCAM visualization, species gallery, favorites, recent predictions, and bilingual UI.",
+  tech: [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "FastAPI",
+    "TensorFlow",
+    "EfficientNetB0",
+    "GradCAM",
+  ],
+  metrics: [
+    { label: "Species", value: 102, tone: "green" },
+    { label: "AI Model", value: 84, tone: "cyan" },
+    { label: "GradCAM", value: 85, tone: "yellow" },
+  ],
+  demoUrl: "https://floraid.vercel.app/",
+  featured: true,
+  
+},
 ];
