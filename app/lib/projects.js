@@ -71,6 +71,8 @@ export const projects = [
   category: "ai",
   className: "Flower Identification Web App",
   status: "DEPLOYED",
+  image:
+      "public/asset/floraid.png",
   description:
     "AI-powered flower identification web app for classifying Oxford 102 flower species from uploaded images, featuring confidence scores, top prediction alternatives, GradCAM visualization, species gallery, favorites, recent predictions, and bilingual UI.",
   tech: [
