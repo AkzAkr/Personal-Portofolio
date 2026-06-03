@@ -95,4 +95,32 @@ export const projects = [
   featured: true,
   
 },
+{
+  id: "fsa-atom-notation",
+  specimen: "SPEC_005",
+  title: "FSA Atom Notation Simulator",
+  category: "web",
+  className: "Finite State Automaton Chemistry Simulator",
+  status: "DEPLOYED",
+  image: "/asset/fsa-atom.png",
+  description:
+    "Interactive finite state automaton simulator for validating atomic notation and simple chemical compound formulas, featuring step-by-step state transitions, character tape, transition table, semantic element validation, isotope mass validation, full periodic table, Bohr atom visualization, 2D compound sketches, batch validation, history, and dark mode UI.",
+  tech: [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Finite State Automaton",
+    "Periodic Table",
+    "Isotope Validation",
+    "Bohr Model",
+    "2D Molecular Visualization",
+  ],
+  metrics: [
+    { label: "Elements", value: 118, tone: "green" },
+    { label: "Isotopes", value: 118, tone: "cyan" },
+    { label: "Modes", value: 2, tone: "yellow" },
+  ],
+  demoUrl: "https://fsa-atom-notation-simulator.vercel.app/",
+  featured: true,
+},
 ];
